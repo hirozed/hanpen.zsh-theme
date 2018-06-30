@@ -16,38 +16,9 @@ if (( ${+commands[src-hilite-lesspipe.sh]} )); then
   export LESSOPEN="| ${commands[src-hilite-lesspipe.sh]} %s"
 fi
 
-# command execution time
-if zmodload -F -a zsh/datetime +p:EPOCHSECONDS; then
-  local _hanpen_zsh_theme_cmd_exec_time
-  local _hanpen_zsh_theme_cmd_timestamp
-
-  _hanpen_zsh_theme_preexec() {
-    _hanpen_zsh_theme_cmd_timestamp=$EPOCHSECONDS
-  }
-
-  _hanpen_zsh_theme_precmd() {
-    _hanpen_zsh_theme_cmd_exec_time=
-    integer elapsed
-    (( elapsed = EPOCHSECONDS - ${_hanpen_zsh_theme_cmd_timestamp:-$EPOCHSECONDS} ))
-    if (( elapsed > ${ZSH_THEME_HANPEN_CMD_MAX_EXEC_TIME:=5} )); then
-      _hanpen_zsh_theme_cmd_exec_time="↪ "
-      if (( ${+commands[pretty-time]} )) || (( ${+functions[pretty-time]} )); then
-        _hanpen_zsh_theme_cmd_exec_time+=$(pretty-time $elapsed)
-      else
-        _hanpen_zsh_theme_cmd_exec_time+="${elapsed}s"
-      fi
-    fi
-  }
-
-  preexec_functions+=(_hanpen_zsh_theme_preexec)
-  precmd_functions+=(_hanpen_zsh_theme_precmd)
-fi
-
 # prompt
 setopt extended_glob
 local prompt_status='%(?..%K{red} %{$fg[black]%}✘ %? )%k'
-local prompt_time='%K{247} %{$fg[black]%}%D{%T} %k'
-local prompt_user='%K{237} %{$fg[yellow]%}%n %k'
 local prompt_dir='%K{236} %F{033}%~ %k'
 
 local prompt_git_info='$(git_prompt_info)$(git_prompt_status)${$(git_remote_status)/[^ ]##} %k'
@@ -70,5 +41,5 @@ local prompt_cmd_exec_time='%{$reset_color%}${_hanpen_zsh_theme_cmd_exec_time}'
 local prompt_char='%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%})» %f%b'
 
 PROMPT="
-${prompt_status}${prompt_time}${prompt_user}${prompt_dir}${prompt_git_info}${prompt_cmd_exec_time}
+${prompt_status}${prompt_dir}${prompt_git_info}
 ${prompt_char}"
