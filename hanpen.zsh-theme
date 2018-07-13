@@ -26,7 +26,7 @@ function ssh_connection() {
 setopt extended_glob
 local prompt_status='%(?..%K{red} %{$fg[black]%}✘ %? )%k'
 local prompt_dir='%K{236} %F{033}%~ %k'
-local prompt_host='%{$fg[yellow]}%m %k'
+local prompt_host='%{$fg[yellow]%}%m %k'
 
 local prompt_git_info='$(git_prompt_info)$(git_prompt_status)${$(git_remote_status)/[^ ]##} %k'
 ZSH_THEME_GIT_PROMPT_PREFIX="%K{235} %{$fg_bold[magenta]%} %{$fg_no_bold[magenta]%}"
