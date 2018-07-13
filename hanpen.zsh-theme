@@ -20,6 +20,7 @@ fi
 setopt extended_glob
 local prompt_status='%(?..%K{red} %{$fg[black]%}✘ %? )%k'
 local prompt_dir='%K{236} %F{033}%~ %k'
+local prompt_host='%K%{$fg[yellow]%}%m% %k'
 
 local prompt_git_info='$(git_prompt_info)$(git_prompt_status)${$(git_remote_status)/[^ ]##} %k'
 ZSH_THEME_GIT_PROMPT_PREFIX="%K{235} %{$fg_bold[magenta]%} %{$fg_no_bold[magenta]%}"
@@ -41,5 +42,5 @@ local prompt_cmd_exec_time='%{$reset_color%}${_hanpen_zsh_theme_cmd_exec_time}'
 local prompt_char='%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%})» %f%b'
 
 PROMPT="
-${prompt_status}${prompt_dir}${prompt_git_info}
+${prompt_status}${prompt_host}${prompt_dir}${prompt_git_info}
 ${prompt_char}"
