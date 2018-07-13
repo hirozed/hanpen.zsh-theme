@@ -49,4 +49,4 @@ local prompt_char='%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%})» %f%b'
 
 PROMPT="
 ${prompt_status}${prompt_dir}${prompt_git_info}
-$(ssh_connection)${prompt_host}${prompt_char}"
+$(ssh_connection)${prompt_char}"
