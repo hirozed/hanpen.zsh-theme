@@ -16,6 +16,12 @@ if (( ${+commands[src-hilite-lesspipe.sh]} )); then
   export LESSOPEN="| ${commands[src-hilite-lesspipe.sh]} %s"
 fi
 
+function ssh_connection() {
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo "%{$fg_bold[red]%}(ssh) "
+  fi
+}
+
 # prompt
 setopt extended_glob
 local prompt_status='%(?..%K{red} %{$fg[black]%}✘ %? )%k'
@@ -43,4 +49,4 @@ local prompt_char='%(?.%{$fg_bold[green]%}.%{$fg_bold[red]%})» %f%b'
 
 PROMPT="
 ${prompt_status}${prompt_host}${prompt_dir}${prompt_git_info}
-${prompt_char}"
+$(ssh_connection)${prompt_char}"
